@@ -9,6 +9,7 @@ namespace BookStore.Application.Services
 		Task<Guid> DeleteBook(Guid id);
 		Task<List<BookDto>> GetAllBooks();
 		BookDto GetBookById(Guid id);
-		Task<Guid> UpdateBook(Guid id, string title, decimal price, int numberInStock, string language, List<Guid> authors, List<Guid> genres, List<Guid> payments);
+		Task<Guid> UpdateBook(Guid id, string title, decimal price, int numberInStock, string language,
+			string imgUrl, string description, List<Guid> authors, List<Guid> genres, List<Guid> payments);
 	}
 }

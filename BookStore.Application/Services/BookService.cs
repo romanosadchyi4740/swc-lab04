@@ -29,7 +29,7 @@ namespace BookStore.Application.Services
 
 		public async Task<List<BookDto>> GetAllBooks()
 		{
-			List<Book> books = await _bookRepository.Get();
+			var books = await _bookRepository.Get();
 
 			return books.Select(EntityToDto).ToList();
 		}
@@ -40,9 +40,9 @@ namespace BookStore.Application.Services
 		}
 
 		public async Task<Guid> UpdateBook(Guid id, string title, decimal price, int numberInStock, string language,
-			List<Guid> authors, List<Guid> genres, List<Guid> payments)
+			string imgUrl, string description, List<Guid> authors, List<Guid> genres, List<Guid> payments)
 		{
-			return await _bookRepository.Update(id, title, price, numberInStock, language,
+			return await _bookRepository.Update(id, title, price, numberInStock, language, imgUrl, description,
 				authors.Select(_authorRepository.GetById).ToList(),
 				genres.Select(_genreRepository.GetById).ToList(),
 				payments.Select(_paymentRepository.GetById).ToList());
@@ -62,6 +62,8 @@ namespace BookStore.Application.Services
 				Price = bookDto.Price,
 				NumberInStock = bookDto.NumberInStock,
 				Language = bookDto.Language,
+				ImgUrl = bookDto.ImgUrl,
+				Description = bookDto.Description,
 				Authors = bookDto.AuthorIds.Select(_authorRepository.GetById).ToList(),
 				Genres = bookDto.GenreIds.Select(_genreRepository.GetById).ToList(),
 				Payments = bookDto.PaymentIds.Select(_paymentRepository.GetById).ToList(),
@@ -70,8 +72,15 @@ namespace BookStore.Application.Services
 
 		private BookDto EntityToDto(Book book)
 		{
-			return new BookDto(book.Id, book.Title, book.Price, book.NumberInStock, book.Language)
+			return new BookDto
 			{
+				Id = book.Id,
+				Title = book.Title,
+				Price = book.Price,
+				NumberInStock = book.NumberInStock,
+				Language = book.Language,
+				ImgUrl = book.ImgUrl,
+				Description = book.Description,
 				AuthorIds = book.Authors.Select(a => a.Id).ToList(),
 				GenreIds = book.Genres.Select(g => g.Id).ToList(),
 				PaymentIds = book.Payments.Select(p => p.Id).ToList(),

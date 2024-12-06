@@ -42,7 +42,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(options =>
-	options.WithOrigins("http://localhost:4200")
+	options.WithOrigins("http://localhost:52013")
 		.AllowAnyMethod()
 		.AllowAnyHeader());
 

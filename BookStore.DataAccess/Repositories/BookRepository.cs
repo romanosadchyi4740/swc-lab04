@@ -1,6 +1,5 @@
 ﻿using BookStore.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookStore.DataAccess.Repositories
 {
@@ -49,7 +48,8 @@ namespace BookStore.DataAccess.Repositories
 			return book.Id;
 		}
 
-		public async Task<Guid> Update(Guid id, string title, decimal price, int numberInStock, string language, List<Author> authors, List<Genre> genres, List<Payment> payments)
+		public async Task<Guid> Update(Guid id, string title, decimal price, int numberInStock, string language,
+			string imgUrl, string description, List<Author> authors, List<Genre> genres, List<Payment> payments)
 		{
 			var book = await _context.Books
 				.Include(b => b.Authors)
@@ -66,6 +66,8 @@ namespace BookStore.DataAccess.Repositories
 			book.Price = price;
 			book.NumberInStock = numberInStock;
 			book.Language = language;
+			book.ImgUrl = imgUrl;
+			book.Description = description;
 
 			book.Authors.Clear();
 			foreach (var author in authors)
